@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from.models import Students
+from.models import myQuery
+from django.http import HttpResponse
 
 # Create your views here.
 def home(request):
@@ -27,7 +29,7 @@ def register(request):
                 stu_password=password,
                 )
             msg="Registration successfull"
-            return render(request,"home.html",{'msg':msg})
+            return render(request,"dashboad.html",{'msg':msg})
         else:
             msg="Password is not matching"
             return render(request,'register.html',{'msg':msg})    
@@ -55,7 +57,8 @@ def login(request):
                     'password':password1,
                     'contact':contact1,
                 }
-                return render(request,'dashboad.html',{'data':data})
+                query_data = myQuery.objects.filter(stu_email=email)
+                return render(request,'dashboad.html',{'data':data,'query_data':query_data})
             else:
                 msg="email and password not matched"
                 return render(request,'login.html',{'msg':msg})
@@ -64,3 +67,71 @@ def login(request):
             return render(request,'register.html',{'msg':msg})
     else:
         return render(request,'login.html')
+    
+def all_details(request):
+        data=Students.objects.all().values_list('stu_name','stu_email','stu_contact','stu_password')
+        print(data)
+        print(data.values_list())
+        
+        return HttpResponse(data)
+    
+def filter(request):
+    data=Students.objects.filter(stu_name="deepa")
+    print(data)
+    return HttpResponse(data)
+def exclude(request):
+    data=Students.objects.exclude(stu_name="deepa")
+    print(data)
+    return HttpResponse(data)
+def order(request):
+    data=Students.objects.order_by('stu_name')
+    return HttpResponse(data)
+def dis_order(request):
+    #data=Students.objects.order_by('-stu_name')
+    data=Students.objects.order_by('stu_name').reverse()
+    return HttpResponse(data)
+def slice(request):
+    data=Students.objects.all()
+    return HttpResponse(data)  
+
+
+def query(request):
+    if request.method=='POST':
+        name=request.POST.get('nm')
+        email=request.POST.get('em')
+        query=request.POST.get('query')
+        print(name,email,query)
+        myQuery.objects.create(
+        stu_email=email,
+        stu_name=name,
+        stu_query=query)
+        data=Students.objects.get(stu_email=email)
+        data={
+        'name':data.stu_name,
+        'email':data.stu_email,
+        'contact':data.stu_contact,
+        'password':data.stu_password
+        }
+        print(data,query_data)
+        query_data=myQuery.objects.filter(stu_email=email)
+        return render(request,'dashboad.html',{'data':data,'query_data':query_data})
+    msg="succusfull....."
+    return render(request,'dashboad.html',{'msg':msg})
+
+    
+# def first(request):
+#     data=Students.objects.first()
+#     print(data)
+#     print(data.stu_name,data.stu_contact,data.stu_email,data.stu_password)
+#     return  HttpResponse(data)
+# def last(request):
+#     data=Students.objects.last()
+#     print(data)
+#     print(data.stu_name,data.stu_contact,data.stu_email,data.stu_password)
+
+#     return HttpResponse(data)
+# def lastest(request):
+#     data=Students.objects.latest("id")
+#     print(data)
+#     return HttpResponse(data)
+

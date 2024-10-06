@@ -1,3 +1,58 @@
-{{data.name}}<br><br>
-{{data.contact}}<br><br>
-{{data.email}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .form{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+    </style>
+
+</head>
+<body>
+    {{data.name}}<br>
+    {{data.contact}}<br>
+    {{data.email}}
+ <div style="display: flex; justify-content: space-evenly;">
+
+    <div>
+        <h3>Ouery Form</h3>
+
+        <form action="{% url 'query' %}" class="form" method="post" >
+            {% csrf_token %}
+
+            <label for="">Name:</label>
+            <input type="text" name="nm" value={{data.name}} disabled id="">
+            <label for="email">Email</label>
+            <input type="email" name="em" value="{{data.email}}" disabled id="">
+            <label for="">Query</label>
+            <input type="text" name="query" id="{{data.quey}}" inputmode="">
+            <button>Query</button>
+            </form>
+    </div>
+    <div>
+        <h3>Query Table</h3>
+
+<table border="1">
+
+    <tr>
+        <th>sno</th>
+        <th>name</th>
+        <th>email</th>
+        <th>Query</th>
+        <th>edit</th>
+        <th>delete</th>
+    </tr>
+   {{data1}}
+   {{query_data}}
+</table>
+    </div>
+
+
+</div>
+</body>
+</html>
