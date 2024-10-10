@@ -68,37 +68,38 @@ def login(request):
     else:
         return render(request,'login.html')
     
-def all_details(request):
-        data=Students.objects.all().values_list('stu_name','stu_email','stu_contact','stu_password')
-        print(data)
-        print(data.values_list())
+# def all_details(request):
+#         data=Students.objects.all().values_list('stu_name','stu_email','stu_contact','stu_password')
+#         print(data)
+#         print(data.values_list())
         
-        return HttpResponse(data)
+#         return HttpResponse(data)
     
-def filter(request):
-    data=Students.objects.filter(stu_name="deepa")
-    print(data)
-    return HttpResponse(data)
-def exclude(request):
-    data=Students.objects.exclude(stu_name="deepa")
-    print(data)
-    return HttpResponse(data)
-def order(request):
-    data=Students.objects.order_by('stu_name')
-    return HttpResponse(data)
-def dis_order(request):
-    #data=Students.objects.order_by('-stu_name')
-    data=Students.objects.order_by('stu_name').reverse()
-    return HttpResponse(data)
-def slice(request):
-    data=Students.objects.all()
-    return HttpResponse(data)  
+# def filter(request):
+#     data=Students.objects.filter(stu_name="deepa")
+#     print(data)
+#     return HttpResponse(data)
+# def exclude(request):
+#     data=Students.objects.exclude(stu_name="deepa")
+#     print(data)
+#     return HttpResponse(data)
+# def order(request):
+#     data=Students.objects.order_by('stu_name')
+#     return HttpResponse(data)
+# def dis_order(request):
+#     #data=Students.objects.order_by('-stu_name')
+#     data=Students.objects.order_by('stu_name').reverse()
+#     return HttpResponse(data)
+# def slice(request):
+#     data=Students.objects.all()
+#     return HttpResponse(data)  
+
 
 
 def query(request):
     if request.method=='POST':
-        name=request.POST.get('nm')
-        email=request.POST.get('em')
+        name=request.POST.get('name')
+        email=request.POST.get('email')
         query=request.POST.get('query')
         print(name,email,query)
         myQuery.objects.create(
@@ -112,12 +113,33 @@ def query(request):
         'contact':data.stu_contact,
         'password':data.stu_password
         }
-        print(data,query_data)
+        
         query_data=myQuery.objects.filter(stu_email=email)
+        print(data,query_data)
         return render(request,'dashboad.html',{'data':data,'query_data':query_data})
     msg="succusfull....."
     return render(request,'dashboad.html',{'msg':msg})
-
+def edit(request,x):
+    data1=myQuery.objects.get(id=x)
+    id1=data1.id
+    email=data1.stu_email
+    name=data1.stu_name
+    query=data1.stu_query
+    data=Students.objects.get(stu_email=email)
+    data={
+        'name':data.stu_name,
+        'email':data.stu_email,
+        'contact':data.stu_contact,
+        'password':data.stu_password
+        }
+    query_data=myQuery.objects.filter(stu_email=email)
+    edit_data={
+        'id':id1,
+        'email':email,
+        'name':name,
+        'query':query,
+    }
+    return render(request,'dashboad.html',{'key2':edit_data, 'data':data, 'query_data':query_data})
     
 # def first(request):
 #     data=Students.objects.first()

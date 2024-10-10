@@ -8,14 +8,16 @@
 <body>
     <h1>HOME Page.....</h1>
     <a href="{% url 'register' %}">Register</a>
+    <br>
     <a href="{% url 'login' %}">Login</a>
-    <a href="{% url 'all_details' %}">All Details</a>
 
+
+    {% comment %} <a href="{% url 'all_details' %}">All Details</a>
     <a href="{% url 'filter' %}">Filter</a>
     <a href="{% url 'exclude' %}">Exclude</a>
     <a href="{% url 'order' %}">Order_by assending</a>
     <a href="{% url 'dis_order' %}">Order by disassending</a>
-    <a href="{% url 'slice' %}">Slice</a><br>
+    <a href="{% url 'slice' %}">Slice</a><br> {% endcomment %}
 
 
     {% comment %} <a href="{% url 'first' %}">First User</a>
