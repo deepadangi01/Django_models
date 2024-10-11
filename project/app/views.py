@@ -140,6 +140,67 @@ def edit(request,x):
         'query':query,
     }
     return render(request,'dashboad.html',{'key2':edit_data, 'data':data, 'query_data':query_data})
+def update(request,x):
+    if request.method=="POST":
+        name1=request.POST.get('name')
+        email1=request.POST.get('email')
+        query1=request.POST.get('query')
+        print(name1,email1,query1)
+        oldData=myQuery.objects.get(id=x)
+
+        oldData.stu_name=name1
+        oldData.stu_email=email1
+        oldData.stu_query=query1
+        oldData.save()
+    
+        data=Students.objects.get(stu_email=email1)
+        
+        data={
+           'name':data.stu_name,
+           'email':data.stu_email,
+           'contact':data.stu_contact,
+           'password':data.stu_password
+        }  
+        query_data=myQuery.objects.filter(stu_email=email1)
+    return render(request,'dashboad.html',{'data':data, 'query_data':query_data}) 
+
+def delete(request,x,y):
+    queryData=myQuery.objects.filter(id=x)
+    if queryData:
+        queryData=myQuery.objects.get(id=x)
+        name1=queryData.stu_name
+        email1=queryData.stu_email
+        query1=queryData.stu_query
+
+        queryData.delete()
+        data=Students.objects.get(stu_email=email1)
+        
+        data={
+           'name':data.stu_name,
+           'email':data.stu_email,
+           'contact':data.stu_contact,
+           'password':data.stu_password
+        } 
+        query_data=myQuery.objects.filter(stu_email=email1)
+        return render(request,'dashboad.html',{'data':data,'query_data':query_data})
+    else:
+        data=Students.objects.get(stu_email=y)
+        data={
+           'name':data.stu_name,
+           'email':data.stu_email,
+           'contact':data.stu_contact,
+           'password':data.stu_password
+        }  
+        query_data=myQuery.objects.filter(stu_email=y)
+        return render(request,'dashboad.html',{'query_data':query_data,'data':data})
+        
+        
+        
+   
+   
+
+
+
     
 # def first(request):
 #     data=Students.objects.first()
