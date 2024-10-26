@@ -1,8 +1,11 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
     <title>Document</title>
 
 </head>
@@ -16,7 +19,7 @@
         <input type="email" name="email" placeholder="Email"><br><br>
         <input type="password" name="pass" placeholder="password"><br><br>
         <input type="password" name="cpass" placeholder="conform password"><br><br>
-        <button>Submit</button>
+        <button class="btn">Submit</button>
     </form>
 </body>
 </html>

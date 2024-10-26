@@ -1,15 +1,19 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+     <title>Website</title>
 </head>
 <body>
-    <h1>HOME Page.....</h1>
-    <a href="{% url 'register' %}">Register</a>
+    <div class="home">
+        
+    <h2>HOME Page.....</h2>
+    <a href="{% url 'register' %}" class="btn">Register</a>
     <br>
-    <a href="{% url 'login' %}">Login</a>
+    <a href="{% url 'login' %}" class="btn">Login</a>
 
 
     {% comment %} <a href="{% url 'all_details' %}">All Details</a>
@@ -23,7 +27,7 @@
     {% comment %} <a href="{% url 'first' %}">First User</a>
     <a href="{% url 'last' %}">Last User</a>
     <a href="{% url 'lastest' %}">Lastest</a>  {% endcomment %}
-    
+    </div>
 
 </body>
 </html>

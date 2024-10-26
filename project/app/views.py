@@ -119,6 +119,7 @@ def query(request):
         return render(request,'dashboad.html',{'data':data,'query_data':query_data})
     msg="succusfull....."
     return render(request,'dashboad.html',{'msg':msg})
+
 def edit(request,x):
     data1=myQuery.objects.get(id=x)
     id1=data1.id
@@ -193,6 +194,8 @@ def delete(request,x,y):
         }  
         query_data=myQuery.objects.filter(stu_email=y)
         return render(request,'dashboad.html',{'query_data':query_data,'data':data})
+def logout(request):
+    return render(request,'home.html')
         
         
         

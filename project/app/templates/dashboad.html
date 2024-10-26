@@ -1,25 +1,22 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <title>Document</title>
     <style>
-        .form{
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-        }
+       
     </style>
 
 </head>
 <body>
-    {{data.name}}<br>
-    {{data.contact}}<br>
-    {{data.email}}
- <div style="display: flex; justify-content: space-evenly;">
+    
+ <div class="dashboard">
 
     <div>
+      <a href="{% url 'logout' %}" ><button class="btn">LogOut</button></a>
         <h3>Ouery Form</h3>
         {% if key2 %}
         <form action="{% url 'update' x=key2.id %}" x=key2.id class="form" method="post" >
@@ -31,7 +28,7 @@
             <input type="email" name="email" value="{{key2.email}}" readonly>
             <label for="query">Query</label>
             <input type="text" name="query" value="{{key2.query}}"  inputmode="">
-            <button>Update</button>
+            <button class="btn">Update</button>
             </form>
             {% else %}
             <form action="{% url 'query' %}" class="form" method="post" >
@@ -43,7 +40,8 @@
                 <input type="email" name="email" value="{{data.email}}"  readonly>
                 <label for="query">Query</label>
                 <input type="text" name="query" id="query" inputmode="">
-                <button>Query</button>
+                <br>
+                <button class="btn">Query</button>
                 </form>
             {% endif %}
     </div>
@@ -67,8 +65,8 @@
     <td>{{i.stu_name}}</td>
     <td>{{i.stu_email}}</td>
     <td>{{i.stu_query}}</td>
-   <td><a href="{% url 'edit' x=i.id %}"><button>Edit </button></a></td>
-   <td><a href="{% url 'delete' x=i.id y=i.stu_email %}"><button>Delete</button></a></td>
+   <td><a href="{% url 'edit' x=i.id %}"><button class="btn">Edit </button></a></td>
+   <td><a href="{% url 'delete' x=i.id y=i.stu_email %}"><button class="btn">Delete</button></a></td>
     </tr>
     {% endfor %}
    </tbody>
